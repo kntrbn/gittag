@@ -31,8 +31,6 @@ app.command('/gittag', async ({ command, ack, say }) => {
 
   });
   
-  await say(`最新バージョンは${latestVersionTag}です`);
-
 
   exec('/Users/ken/github/gittag/tagOnMainBranch.sh ' + command.text, (err, stdout, stderr) => {
       if (err) {
