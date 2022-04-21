@@ -22,8 +22,8 @@ app.command('/gittag', async ({ command, ack, say }) => {
   requestmode=command.text;
   await parseRequestmode(requestmode);
   currentVersion=getCurrentVersion();
-  newVersion=calcNewVersion(currentVersion, requestmode)
-  await tagOnMainBranch(newVersion)
+  newVersion=calcNewVersion(currentVersion, requestmode);
+  await tagOnMainBranch(newVersion);
   await say(`最新バージョンは${currentVersion}です`);
   
 });
