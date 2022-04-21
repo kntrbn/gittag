@@ -27,7 +27,8 @@ app.command('/gittag', async ({ command, ack, say }) => {
     // console.log(`stdout for getversion: ${stdout}`)
     latestVersionTag=stdout;
     console.log(`a variable for getversion: ${latestVersionTag}`)
-  
+    say(`最新バージョンは${latestVersionTag}です`);
+
   });
   
   await say(`最新バージョンは${latestVersionTag}です`);
