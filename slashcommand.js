@@ -7,6 +7,7 @@ const app = new App({
 
 const { exec } = require('child_process');
 let latestVersionTag;
+let requestmode;
 
 (async () => {
   // Webアプリの起動
@@ -17,20 +18,16 @@ let latestVersionTag;
 // /gittagを送信したときの処理
 app.command('/gittag', async ({ command, ack, say }) => {
   await ack();
-  // await say(`Tagging with ${command.text}`);
-
-
   // 最新のバージョンタグを取得。X.X.Xの形式のみ抽出し、そのうち最大値を返却するShellを実行
   // バージョンは文字列としてStdoutより取得
   exec('/Users/ken/github/gittag/getLatestVersion.sh', (err, stdout, stderr) => {
-    // latestVersionTag = ${stdout}
-    // console.log(`stdout for getversion: ${stdout}`)
     latestVersionTag=stdout;
     console.log(`a variable for getversion: ${latestVersionTag}`)
     say(`最新バージョンは${latestVersionTag}です`);
-
   });
   
+  requestmode=command.text;
+
 
   exec('/Users/ken/github/gittag/tagOnMainBranch.sh ' + command.text, (err, stdout, stderr) => {
       if (err) {
