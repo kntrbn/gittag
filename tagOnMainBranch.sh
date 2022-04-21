@@ -3,6 +3,7 @@ TAGNAME=$1
 
 cd /Users/ken/github/gittag
 git fetch origin main
+git checkout main
 git add .
 git commit -m "Commit by gittag"
 git tag $TAGNAME main
