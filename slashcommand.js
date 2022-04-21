@@ -24,7 +24,8 @@ app.command('/gittag', async ({ command, ack, say }) => {
   currentVersion=getCurrentVersion();
   newVersion=calcNewVersion(currentVersion, requestmode)
   tagOnMainBranch(newVersion)
-
+  say(`最新バージョンは${currentVersion}です`);
+  
 });
 
 
@@ -49,7 +50,6 @@ app.command('/gittag', async ({ command, ack, say }) => {
     exec('/Users/ken/github/gittag/getLatestVersion.sh', (err, stdout, stderr) => {
       currentVersion=stdout;
       console.log(`a variable for getversion: ${currentVersion}`)
-      say(`最新バージョンは${currentVersion}です`);
       return currentVersion;
     });
   }
