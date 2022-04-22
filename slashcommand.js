@@ -5,9 +5,9 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-const { exec } = require('child_process');
+const { execSync } = require('child_process');
 let currentVersion;
-let newVersion;
+let newVersion="8.8.8";
 let requestmode;
 
 (async () => {
@@ -19,28 +19,28 @@ let requestmode;
 // /gittagを送信したときの処理
 app.command('/gittag', async ({ command, ack, say }) => {
   await ack();
+  console.log('Inside command: 1');
   requestmode=command.text;
-  parseRequestmode(requestmode);
+  console.log(parseRequestmode(requestmode));
+  console.log('Inside command: 2');
   currentVersion=getCurrentVersion();
+  console.log(getCurrentVersion());
+  console.log('Inside command: 3 ' + currentVersion);
+  console.log('Inside command: 3 ' + requestmode);
+  console.log('Inside command: 4');
   newVersion=calcNewVersion(currentVersion, requestmode);
+  console.log('Inside command: 5');
   tagOnMainBranch(newVersion);
+  console.log('Inside command: 6');
   await say(`最新バージョンは${currentVersion}です`);
   await say(`リリースバージョンは${newVersion}です`);
-
   
 });
 
 
   function tagOnMainBranch(tagname){
 
-    exec('/Users/ken/github/gittag/tagOnMainBranch.sh ' + tagname, (err, stdout, stderr) => {
-        if (err) {
-          console.log(`stder for tagging: ${stderr}`)
-          return
-        }
-        console.log(`stdout  for tagging: ${stdout}`)
-      }
-    )
+    execSync('/Users/ken/github/gittag/tagOnMainBranch.sh ' + tagname)
 
   }
 
@@ -48,21 +48,21 @@ app.command('/gittag', async ({ command, ack, say }) => {
   // 最新のバージョンタグを取得。X.X.Xの形式のみ抽出し、そのうち最大値を返却するShellを実行
   // バージョンは文字列としてStdoutより取得
   function getCurrentVersion(){
-    exec('/Users/ken/github/gittag/getLatestVersion.sh', (err, stdout, stderr) => {
-      currentVersion=stdout;
-      console.log(`a variable for getversion: ${currentVersion}`)
-      return currentVersion;
-    });
-  }
+    console.log('getCurrentVersion() has started');
+    currentVersion=execSync('/Users/ken/github/gittag/getLatestVersion.sh')
+    return currentVersion.toString();
+}
 
 
 // 現在のバージョン、リクエストをもとに新しいバージョンを返却する
 function calcNewVersion(currentVersion, requestmode){
 
-  if(parseVersion(currentVersion)){} else{return false;}
-  if(parseRequestmode(requestmode)){} else{return false;}
+  // if(parseVersion(currentVersion)){} else{return false;}
+  // if(parseRequestmode(requestmode)){} else{return false;}
+  console.log(currentVersion);
 
-  let versionArray = currentVersion.split(".");
+
+  let versionArray = currentVersion.toString().split(".");
   switch(requestmode) {
       case "major":
       versionArray[0]=parseInt(versionArray[0])+1;

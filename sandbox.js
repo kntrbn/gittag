@@ -1,7 +1,22 @@
-let version="1.2.3";
-let request="major"
+let version="aaa";
+let request="major";
 
 console.log(calcNewVersion(version,request));
+
+
+const { execSync } = require('child_process');
+
+
+
+
+console.log(getCurrentVersion());
+
+function getCurrentVersion(){
+    console.log('getCurrentVersion() has started');
+    currentVersion=execSync('/Users/ken/github/gittag/getLatestVersion.sh')
+    return currentVersion.toString(); 
+}
+
 
 
 
