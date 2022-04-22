@@ -21,22 +21,25 @@ app.command('/gittag', async ({ command, ack, say }) => {
   await ack();
   // console.log('Inside command: 1');
   requestmode=command.text;
-  console.log(parseRequestmode(requestmode));
-  // console.log('Inside command: 2');
-  currentVersion=getCurrentVersion();
-  console.log(getCurrentVersion());
-  // console.log('Inside command: 3 ' + currentVersion);
-  // console.log('Inside command: 3 ' + requestmode);
-  // console.log('Inside command: 4');
-  newVersion=calcNewVersion(currentVersion, requestmode);
-  // console.log('Inside command: 5');
-  tagOnMainBranch(newVersion);
-  // console.log('Inside command: 6');
+  if(parseRequestmode(command.text)){
+    console.log(parseRequestmode(requestmode));
+    // console.log('Inside command: 2');
+    currentVersion=getCurrentVersion();
+    console.log(getCurrentVersion());
+    // console.log('Inside command: 3 ' + currentVersion);
+    // console.log('Inside command: 3 ' + requestmode);
+    // console.log('Inside command: 4');
+    newVersion=calcNewVersion(currentVersion, requestmode);
+    // console.log('Inside command: 5');
+    tagOnMainBranch(newVersion);
+    // console.log('Inside command: 6');
+    await say(`最新バージョン${currentVersion}に対し、${requestmode}アップデートをします`);
+    await say(`リリースバージョンは${newVersion}です`);
+  }else{
+    await say(`入力値が誤っています:${requestmode} 。次から入力してください major|minor|patch`);
+  }
 
 
-
-  await say(`最新バージョン${currentVersion}に対し、${requestmode}アップデートをします`);
-  await say(`リリースバージョンは${newVersion}です`);
   
 });
 
