@@ -38,8 +38,6 @@ app.command('/gittag', async ({ command, ack, say }) => {
   }else{
     await say(`入力値が誤っています:${requestmode} 。次から入力してください major|minor|patch`);
   }
-
-
   
 });
 
