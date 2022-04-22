@@ -34,7 +34,7 @@ app.command('/gittag', async ({ command, ack, say }) => {
     tagOnMainBranch(newVersion);
     // console.log('Inside command: 6');
     await say(`最新バージョン${currentVersion}に対し、${requestmode}アップデートをします`);
-    await say(`リリースバージョンは${newVersion}です`);
+    await say(`${newVersion}にてタグ付けが完了しました`);
   }else{
     await say(`入力値が誤っています:${requestmode} 。次から入力してください major|minor|patch`);
   }
