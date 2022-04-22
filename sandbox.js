@@ -30,13 +30,19 @@ function calcNewVersion(currentVersion, requestmode){
     switch(requestmode) {
         case "major":
         versionArray[0]=parseInt(versionArray[0])+1;
-          break;
+        versionArray[1]=0;
+        versionArray[2]=0;
+        
+        break;
         case "minor":
         versionArray[1]=parseInt(versionArray[1])+1;
-          break;
+        versionArray[2]=0;
+        
+        break;
         case "patch":
         versionArray[2]=parseInt(versionArray[2])+1;
-          break;
+        
+        break;
         default:
     }
     return versionArray[0] + "." + versionArray[1] + "." + versionArray[2];

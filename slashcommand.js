@@ -59,13 +59,17 @@ function calcNewVersion(currentVersion, requestmode){
   let versionArray = currentVersion.toString().split(".");
   switch(requestmode) {
       case "major":
-      versionArray[0]=parseInt(versionArray[0])+1;
+        versionArray[0]=parseInt(versionArray[0])+1;
+        versionArray[1]=0;
+        versionArray[2]=0;
+        
         break;
       case "minor":
-      versionArray[1]=parseInt(versionArray[1])+1;
+        versionArray[1]=parseInt(versionArray[1])+1;
+        versionArray[2]=0;
         break;
       case "patch":
-      versionArray[2]=parseInt(versionArray[2])+1;
+        versionArray[2]=parseInt(versionArray[2])+1;
         break;
       default:
   }
