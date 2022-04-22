@@ -19,31 +19,31 @@ let requestmode;
 // /gittagを送信したときの処理
 app.command('/gittag', async ({ command, ack, say }) => {
   await ack();
-  console.log('Inside command: 1');
+  // console.log('Inside command: 1');
   requestmode=command.text;
   console.log(parseRequestmode(requestmode));
-  console.log('Inside command: 2');
+  // console.log('Inside command: 2');
   currentVersion=getCurrentVersion();
   console.log(getCurrentVersion());
-  console.log('Inside command: 3 ' + currentVersion);
-  console.log('Inside command: 3 ' + requestmode);
-  console.log('Inside command: 4');
+  // console.log('Inside command: 3 ' + currentVersion);
+  // console.log('Inside command: 3 ' + requestmode);
+  // console.log('Inside command: 4');
   newVersion=calcNewVersion(currentVersion, requestmode);
-  console.log('Inside command: 5');
+  // console.log('Inside command: 5');
   tagOnMainBranch(newVersion);
-  console.log('Inside command: 6');
-  await say(`最新バージョンは${currentVersion}です`);
+  // console.log('Inside command: 6');
+
+
+
+  await say(`最新バージョン${currentVersion}に対し、${requestmode}アップデートをします`);
   await say(`リリースバージョンは${newVersion}です`);
   
 });
 
 
   function tagOnMainBranch(tagname){
-
     execSync('/Users/ken/github/gittag/tagOnMainBranch.sh ' + tagname)
-
   }
-
 
   // 最新のバージョンタグを取得。X.X.Xの形式のみ抽出し、そのうち最大値を返却するShellを実行
   // バージョンは文字列としてStdoutより取得
@@ -53,15 +53,8 @@ app.command('/gittag', async ({ command, ack, say }) => {
     return currentVersion.toString();
 }
 
-
 // 現在のバージョン、リクエストをもとに新しいバージョンを返却する
 function calcNewVersion(currentVersion, requestmode){
-
-  // if(parseVersion(currentVersion)){} else{return false;}
-  // if(parseRequestmode(requestmode)){} else{return false;}
-  console.log(currentVersion);
-
-
   let versionArray = currentVersion.toString().split(".");
   switch(requestmode) {
       case "major":
@@ -77,7 +70,6 @@ function calcNewVersion(currentVersion, requestmode){
   }
   return versionArray[0] + "." + versionArray[1] + "." + versionArray[2];
 }
-
 
 function parseVersion(version){
   var regex = new RegExp('^\\d+\\.\\d+\\.\\d+$');
